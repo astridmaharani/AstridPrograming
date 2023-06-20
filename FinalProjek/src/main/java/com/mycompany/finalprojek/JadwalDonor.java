@@ -17,7 +17,7 @@ class JadwalDonor {
     }
 
     public void tampilkanJadwal() {
-        System.out.println("Jadwal Donor Darah:");
+        System.out.println("Jadwal Pemeriksaan/Donor Darah:");
         System.out.println("Tanggal: " + tanggal);
         System.out.println("Waktu: 10:00 - 15:00");
         System.out.println("Tempat: Rumah Sakit Bekti Waras");

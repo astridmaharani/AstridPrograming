@@ -11,7 +11,7 @@ import java.util.List;
  *
  * @author astri
  */
-class DataDonor {
+public class DataDonor {
     private List<Donor> daftarDonor;
 
     public DataDonor() {
@@ -19,32 +19,18 @@ class DataDonor {
     }
 
     public void tambahDonor(Donor donor) {
-        daftarDonor.add(donor);
+        if (donor.isValid()) {
+            daftarDonor.add(donor);
+        } else {
+            System.out.println("Pendaftaran gagal! Pastikan inisial nama dan golongan darah menggunakan huruf kapital.");
+        }
     }
 
     public void hapusDonor(Donor donor) {
         daftarDonor.remove(donor);
     }
 
-    public Donor cariDonorByNama(String nama) {
-        for (Donor donor : daftarDonor) {
-            if (donor.getNama().equalsIgnoreCase(nama)) {
-                return donor;
-            }
-        }
-        return null;
-    }
 
-    public List<Donor> cariDonorBynama(String nama) {
-        List<Donor> hasilPencarian = new ArrayList<>();
-        for (Donor donor : daftarDonor) {
-            if (donor.getGolonganDarah().equalsIgnoreCase(nama)) {
-                hasilPencarian.add(donor);
-            }
-        }
-        return hasilPencarian;
-    }
-    
     public List<Donor> cariDonorByGolonganDarah(String golonganDarah) {
         List<Donor> hasilPencarian = new ArrayList<>();
         for (Donor donor : daftarDonor) {
@@ -55,7 +41,6 @@ class DataDonor {
         return hasilPencarian;
     }
 
-    
     public List<Donor> getDaftarDonor() {
         return daftarDonor;
     }
@@ -63,7 +48,7 @@ class DataDonor {
     public void urutkanDonorBerdasarkanNama() {
         Collections.sort(daftarDonor, Comparator.comparing(Donor::getNama));
     }
-
 }
+
 
 

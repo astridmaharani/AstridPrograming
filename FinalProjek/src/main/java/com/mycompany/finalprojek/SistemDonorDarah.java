@@ -29,52 +29,59 @@ public class SistemDonorDarah {
             System.out.println("\nMenu:");
             System.out.println("1. Pendaftaran Donor");
             System.out.println("2. Tampilkan Daftar Donor");
-            System.out.println("3. Cari Donor berdasarkan Nama");
-            System.out.println("4. Cari Donor berdasarkan Golongan Darah");
-            System.out.println("5. Tampilkan Jadwal Donor");
-            System.out.println("6. Keluar");
-            System.out.print("Pilihan Anda: ");
+            System.out.println("3. Cari Donor berdasarkan Golongan Darah");
+            System.out.println("4. Keluar");
+            System.out.print("Masukan Pilihan Anda: ");
             pilihan = scanner.nextInt();
 
             switch (pilihan) {
                 case 1:
-                    scanner.nextLine(); // Membersihkan \n setelah input sebelumnya
-                    System.out.print("Masukkan Nama: ");
-                    String nama = scanner.nextLine();
-                    System.out.print("Masukkan Golongan Darah: ");
+                    scanner.nextLine();
+                    System.out.print("Masukkan Nama Pendonor [A-Z]: ");
+                    String namaDonor = scanner.nextLine();
+                    System.out.print("Masukkan Golongan Darah [ABO]: ");
                     String golonganDarah = scanner.nextLine();
+                    System.out.print("Masukkan Umur (minimal 17 tahun): ");
+                    int umur = scanner.nextInt();
+                    System.out.println("==============================================");
 
-                    Donor donor = new Donor(nama, golonganDarah);
-                    dataDonor.tambahDonor(donor);
-                    System.out.println("Pendaftaran berhasil! Terima kasih, " + donor.getNama() + ".");
+                    Donor donor = new Donor(namaDonor, golonganDarah, umur);
+
+                    if (donor.isValid()) {
+                        dataDonor.tambahDonor(donor);
+                        System.out.println("PENDAFTARAN BERHASIL! Harap melakukan pemeriksaan lanjutan di rumah sakit.");
+                        System.out.println("==============================================");
+                        JadwalDonor jadwalDonor = new JadwalDonor("26 Juni 2023");
+                        jadwalDonor.tampilkanJadwal();
+                        System.out.println("==============================================");
+                        System.out.println("Jangan lupa datang sesuai jadwal! Terima kasih, " + donor.getNama() + ".");
+                    } else {
+                        System.out.println("PENDAFTARAN GAGAL!");
+                        System.out.println("Pastikan nama, golongan darah [ABO] menggunakan huruf kapital, dan memenuhi syarat batas umur (minimal 17 tahun).");
+                    }
+
                     break;
                 case 2:
+                    System.out.println("==============================================");
                     dataDonor.urutkanDonorBerdasarkanNama();
                     tampilkanDaftarDonor();
                     break;
                 case 3:
                     scanner.nextLine(); // Membersihkan \n setelah input sebelumnya
-                    System.out.print("Masukkan Nama: ");
-                    String Pendonor = scanner.nextLine();
-                    cariDonorBynama(Pendonor);
-                    break;
-                case 4:
-                    scanner.nextLine(); // Membersihkan \n setelah input sebelumnya
-                    System.out.print("Masukkan Golongan Darah: ");
+                    System.out.print("Masukkan Golongan Darah [ABO]: ");
                     String golDarah = scanner.nextLine();
+                    System.out.println("==============================================");
                     cariDonorByGolonganDarah(golDarah);
                     break;
-                case 5:
-                    JadwalDonor jadwalDonor = new JadwalDonor("21 Juni 2023");
-                    jadwalDonor.tampilkanJadwal();
-                    break;
-                case 6:
-                    System.out.println("Terima kasih telah menggunakan Sistem Pendaftaran Donor Darah.");
+                case 4:
+                    System.out.println("==============================================");
+                    System.out.println("Terima kasih telah menggunakan Sistem Donor Darah.");
                     break;
                 default:
+                    System.out.println("==============================================");
                     System.out.println("Pilihan tidak valid. Silakan pilih menu yang tersedia.");
             }
-        } while (pilihan != 6);
+        } while (pilihan != 4);
 
         scanner.close();
     }
@@ -84,24 +91,13 @@ public class SistemDonorDarah {
         if (daftarDonor.isEmpty()) {
             System.out.println("Belum ada donor terdaftar.");
         } else {
-            System.out.println("Daftar Donor:");
+            System.out.println("Daftar Donor (A-Z):");
             for (Donor donor :             daftarDonor) {
-                System.out.println("Nama: " + donor.getNama() + ", Golongan Darah: " + donor.getGolonganDarah());
+                System.out.println("Nama: " + donor.getNama() + ", Golongan Darah: " + donor.getGolonganDarah() + ", Umur: " + donor.getUmur());
             }
         }
     }
 
-    private static void cariDonorBynama(String nama) {
-        List<Donor> hasilPencarian = dataDonor.cariDonorBynama(nama);
-        if (hasilPencarian.isEmpty()) {
-            System.out.println("Tidak ditemukan pendonor dengan nama " + nama + ".");
-        } else {
-            System.out.println("Pendonor dengan nama " + nama + ":");
-            for (Donor donor : hasilPencarian) {
-                System.out.println("Nama: " + donor.getNama() + ", Golongan Darah: " + donor.getGolonganDarah());
-            }
-        }
-    }
     
     private static void cariDonorByGolonganDarah(String golonganDarah) {
         List<Donor> hasilPencarian = dataDonor.cariDonorByGolonganDarah(golonganDarah);
@@ -110,7 +106,7 @@ public class SistemDonorDarah {
         } else {
             System.out.println("Pendonor dengan golongan darah " + golonganDarah + ":");
             for (Donor donor : hasilPencarian) {
-                System.out.println("Nama: " + donor.getNama() + ", Golongan Darah: " + donor.getGolonganDarah());
+                System.out.println("Nama: " + donor.getNama() + ", Golongan Darah: " + donor.getGolonganDarah() + ", Umur: " + donor.getUmur());
             }
         }
     }

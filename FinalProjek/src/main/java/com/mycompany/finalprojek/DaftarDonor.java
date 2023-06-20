@@ -4,8 +4,6 @@
  */
 package com.mycompany.finalprojek;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 /**
  *
@@ -13,7 +11,7 @@ import java.util.List;
  */
 
 // Kelas Pendaftaran untuk mengatur proses pendaftaran donor
-class DaftarDonor {
+public class DaftarDonor {
     private List<Donor> daftarDonor;
 
     public DaftarDonor() {
@@ -21,8 +19,12 @@ class DaftarDonor {
     }
 
     public void tambahDonor(Donor donor) {
-        daftarDonor.add(donor);
-        System.out.println("Pendaftaran berhasil! Terima kasih, " + donor.getNama() + ".");
+        if (donor.isValid()) {
+            daftarDonor.add(donor);
+            
+        } else {
+            System.out.println("Pendaftaran gagal! Pastikan inisial nama dan golongan darah menggunakan huruf kapital.");
+        }
     }
 
     public void tampilkanDaftarDonor() {
@@ -31,15 +33,16 @@ class DaftarDonor {
         } else {
             System.out.println("Daftar Donor (A-Z):");
             for (Donor donor : daftarDonor) {
-                System.out.println("Nama: " + donor.getNama() + ", Golongan Darah: " + donor.getGolonganDarah());
-             
+                System.out.println("Nama: " + donor.getNama() + ", Golongan Darah: " + donor.getGolonganDarah() + ", Umur: " + donor.getUmur());
             }
         }
     }
-    
-    
-    
 }
+
+    
+    
+    
+
 
 
 

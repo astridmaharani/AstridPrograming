@@ -10,13 +10,15 @@ package com.mycompany.finalprojek;
  */
 
 // Kelas Donor untuk merepresentasikan data donor darah
-class Donor {
+public class Donor {
     private String nama;
     private String golonganDarah;
+    private int umur;
 
-    public Donor(String nama, String golonganDarah) {
+    public Donor(String nama, String golonganDarah, int umur) {
         this.nama = nama;
         this.golonganDarah = golonganDarah;
+        this.umur = umur;
     }
 
     public String getNama() {
@@ -25,6 +27,29 @@ class Donor {
 
     public String getGolonganDarah() {
         return golonganDarah;
+    }
+
+    public int getUmur() {
+        return umur;
+    }
+
+    // Validasi inisial nama harus huruf kapital
+    private boolean isNamaValid() {
+        return nama.matches("[A-Z\\s]+");
+    }
+
+    // Validasi golongan darah harus huruf kapital dan termasuk A, B, AB, atau O
+    private boolean isGolonganDarahValid() {
+        return golonganDarah.matches("[ABO]");
+    }
+
+    // Validasi umur minimal 17 tahun
+    private boolean isUmurValid() {
+        return umur >= 17;
+    }
+
+    public boolean isValid() {
+        return isNamaValid() && isGolonganDarahValid() && isUmurValid();
     }
 }
 
